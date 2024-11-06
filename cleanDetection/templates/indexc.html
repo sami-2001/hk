@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Image Classification</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        /* CSS for the loading symbol */
+        .loader {
+            border: 8px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 8px solid #3498db;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+            display: none; /* Initially hidden */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body style="padding:5%;">
+<h1>Chest Door Open Classification</h1>
+<hr />
+<div class="loader" id="loader"></div> <!-- Loading symbol -->
+<form id="uploadForm" method="POST" action="/upload" enctype="multipart/form-data">
+    <input type="file" name="zipFile" accept=".zip">
+    <input type="hidden" name="original_folder">
+    <br />
+    <br />
+    <p><input type="submit" class="btn btn-primary" value="Submit" onclick="showLoader()"></p> <!-- Call showLoader() function -->
+    {% for msg in get_flashed_messages() %}
+        <h1>Classification Done.</h1>
+        <a href="http://localhost/houseKeeping/viewResult.php?id={{ msg }}" target="_blank" >View Result</a> <!-- Pass msg value in URL -->
+        <!-- <h1 id="flashMessageResponse">{{ msg }}</h1> -->
+        <span id="classificationCompleted"></span>
+    {% endfor %}
+</form>
+
+<script>
+    function showLoader() {
+        var loader = document.getElementById("loader");
+        loader.style.display = "block"; // Show the loading symbol
+    }
+</script>
+</body>
+</html>
